@@ -20,13 +20,13 @@ class resalaty extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: FirebaseAuth.instance.currentUser ==null? LoginPage.id:HomePage.id,
       routes: {
         Register.id: (context) => Register(),
         LoginPage.id: (context) => LoginPage(),
         ChatPage.id: (context) => ChatPage(),
         HomePage.id:(context)=>HomePage(),
       },
-      initialRoute: 'LoginPage',
     );
   }
 }

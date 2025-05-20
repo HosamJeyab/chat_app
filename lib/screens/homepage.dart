@@ -6,6 +6,7 @@ import 'package:my_chat/constants.dart';
 import 'package:my_chat/helper/ShowSnackBar.dart';
 import 'package:my_chat/models/chatUsersModel.dart';
 import 'package:my_chat/screens/chatpage.dart';
+import 'package:my_chat/screens/login.dart';
 import 'package:my_chat/widgets/customChatHistory.dart';
 
 class HomePage extends StatefulWidget {
@@ -72,72 +73,116 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+DateTime? lastBackPressTime;
   @override
   Widget build(BuildContext context) {
     var email = ModalRoute.of(context)!.settings.arguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Image.asset(kLogo, height: 50), Text("RESALATY")],
-        ),
-        backgroundColor: kPrimaryColor,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            //SEARCH FOR USER
-            TextField(
-              onSubmitted: (data) async {
-                try {
-                  var result =
-                      await FirebaseFirestore.instance
-                          .collection('user')
-                          .where('username', isEqualTo: data)
-                          .get();
-
-                  if (result.docs.isNotEmpty) {
-                    currentUserEmail =
-                        FirebaseAuth.instance.currentUser!.email!;
-                    String friendEmail = result.docs.first['email'];
-
-                    Navigator.pushNamed(
-                      context,
-                      ChatPage.id,
-                      arguments: {
-                        'currentUserEmail': currentUserEmail,
-                        'friendEmail': friendEmail,
-                      },
-                    );
-                  } else {
-                    showSnackBar(
-                      context,
-                      "There is no user with this username.",
-                    );
-                  }
-                } catch (e) {
-                  showSnackBar(context, "Sorry... please try again later.");
-                }
+    return WillPopScope(
+    onWillPop: () async {
+      DateTime now = DateTime.now();
+      if (lastBackPressTime == null ||
+          now.difference(lastBackPressTime!) > Duration(seconds: 2)) {
+        lastBackPressTime = now;
+        showSnackBar(context, "Press again to exit");
+        return false;
+      }
+      return true;
+    },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Image.asset(kLogo, height: 50), Text("RESALATY")],
+          ),
+          backgroundColor: kPrimaryColor,
+          actions: [
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder:
+                      (context) => AlertDialog(
+                        title: Text("Sign Out"),
+                        content: Text("Are you suru Sign out?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text("No",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(context).pop();
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.of(
+                                context,
+                              ).pushReplacementNamed(LoginPage.id);
+                            },
+                            child: Text("Yes",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),),
+                          ),
+                        ],
+                      ),
+                );
               },
-              decoration: InputDecoration(
-                hintText: "Search",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: kPrimaryColor),
-                  borderRadius: BorderRadius.circular(16),
+              icon: Icon(Icons.login, color: kFriendColorChat),
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              //SEARCH FOR USER
+              TextField(
+                onSubmitted: (data) async {
+                  try {
+                    var result =
+                        await FirebaseFirestore.instance
+                            .collection('user')
+                            .where('username', isEqualTo: data)
+                            .get();
+      
+                    if (result.docs.isNotEmpty) {
+                      currentUserEmail =
+                          FirebaseAuth.instance.currentUser!.email!;
+                      String friendEmail = result.docs.first['email'];
+      
+                      Navigator.pushNamed(
+                        context,
+                        ChatPage.id,
+                        arguments: {
+                          'currentUserEmail': currentUserEmail,
+                          'friendEmail': friendEmail,
+                        },
+                      );
+                    } else {
+                      showSnackBar(
+                        context,
+                        "There is no user with this username.",
+                      );
+                    }
+                  } catch (e) {
+                    showSnackBar(context, "Sorry... please try again later.");
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: kPrimaryColor),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
               ),
-            ),
-
-            //frind chat
-            ...chatUsers.map((user) {
-              return ChatUserTile(
-                username: user.username,
-                email: user.email,
-                currentUserEmail: currentUserEmail,
-              );
-            }).toList(),
-          ],
+      
+              //frind chat
+              ...chatUsers.map((user) {
+                return ChatUserTile(
+                  username: user.username,
+                  email: user.email,
+                  currentUserEmail: currentUserEmail,
+                );
+              }).toList(),
+            ],
+          ),
         ),
       ),
     );
