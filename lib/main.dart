@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_chat/firebase_options.dart';
-import 'package:my_chat/screens/chatpage.dart';
-import 'package:my_chat/screens/homepage.dart';
-import 'package:my_chat/screens/login.dart';
+import 'package:RESALATY/firebase_options.dart';
+import 'package:RESALATY/screens/chatpage.dart';
+import 'package:RESALATY/screens/homepage.dart';
+import 'package:RESALATY/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_chat/screens/regester.dart';
+import 'package:RESALATY/screens/regester.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:my_chat/constants.dart';
-import 'package:my_chat/helper/ShowSnackBar.dart';
-import 'package:my_chat/screens/chatpage.dart';
-import 'package:my_chat/screens/homepage.dart';
-import 'package:my_chat/widgets/customFormTextField.dart';
-import 'package:my_chat/widgets/customButton.dart';
+import 'package:RESALATY/constants.dart';
+import 'package:RESALATY/helper/ShowSnackBar.dart';
+import 'package:RESALATY/screens/chatpage.dart';
+import 'package:RESALATY/screens/homepage.dart';
+import 'package:RESALATY/widgets/customFormTextField.dart';
+import 'package:RESALATY/widgets/customButton.dart';
 
 class Register extends StatefulWidget {
   Register({super.key});

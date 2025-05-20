@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_chat/constants.dart';
-import 'package:my_chat/helper/ShowSnackBar.dart';
-import 'package:my_chat/models/chatUsersModel.dart';
-import 'package:my_chat/screens/chatpage.dart';
-import 'package:my_chat/screens/login.dart';
-import 'package:my_chat/widgets/customChatHistory.dart';
+import 'package:RESALATY/constants.dart';
+import 'package:RESALATY/helper/ShowSnackBar.dart';
+import 'package:RESALATY/models/chatUsersModel.dart';
+import 'package:RESALATY/screens/chatpage.dart';
+import 'package:RESALATY/screens/login.dart';
+import 'package:RESALATY/widgets/customChatHistory.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});

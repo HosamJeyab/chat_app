@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_chat/constants.dart';
-import 'package:my_chat/models/messageModel.dart';
+import 'package:RESALATY/constants.dart';
+import 'package:RESALATY/models/messageModel.dart';
 //mychat
 class chatBuble extends StatelessWidget {
   chatBuble({super.key, required this.message});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_chat/constants.dart';
-import 'package:my_chat/screens/chatpage.dart';
+import 'package:RESALATY/constants.dart';
+import 'package:RESALATY/screens/chatpage.dart';
 
 class ChatUserTile extends StatelessWidget {
   final String username;

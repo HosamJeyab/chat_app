@@ -1,4 +1,4 @@
-import 'package:my_chat/constants.dart';
+import 'package:RESALATY/constants.dart';
 
 class Message {
   final String message;
